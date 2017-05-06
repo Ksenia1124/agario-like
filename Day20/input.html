@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Input</title>
+    <style>
+      * { margin: 30px; padding: 10px; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; background: rgb(204, 255, 255);}
+    </style>
+  </head>
+  <body>
+    <input type="button" onclick="move_backward()" value="Назад"/>
+    <input type="button" onclick="move_forward()" value="Вперед"/>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect();
+        function move_backward() {
+          socket.emit('moveon', 'backward');
+          return false;
+        }
+        function move_forward() {
+          socket.emit('moveon', 'forward');
+          return false;
+        }
+    </script>
+  </body>
+</html>

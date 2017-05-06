@@ -1,0 +1,47 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Output</title>
+    <style>
+        canvas {
+            outline: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<canvas id='canvas'></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  
+<script>
+ 			var canvas = document.getElementById('canvas'),
+      ctx = canvas.getContext('2d');
+      canvas.height = 500;
+      canvas.width  = 500;
+  
+    let socket = io(location.origin);
+    let stage = new createjs.Stage("canvas");
+    let bitmap = new createjs.Bitmap("http://pixelartmaker.com/art/389faf9fedbe49b.png");
+    bitmap.scaleX = 0.1;
+    bitmap.scaleY = 0.1;
+    bitmap.x = canvas.width/2;
+    bitmap.y = canvas.height/2;
+    stage.addChild(bitmap);
+    stage.update();
+  
+    socket.on('moveon', function (evt) {
+        switch (data.evt) {
+            case 'forward':
+                bitmap.x += 10;
+                break;
+            case 'backward':
+                bitmap.x -= 10;
+                break;
+        }
+        stage.update();
+    });
+</script>
+</body>
+</html>

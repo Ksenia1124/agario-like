@@ -14,21 +14,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   
 <script>
-    var canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d');
-    canvas.height = 500;
-    canvas.width  = 500;
+		var canvas = document.getElementById('canvas'),
+		ctx = canvas.getContext('2d');
+		canvas.height = 500;
+		canvas.width  = 500;
   
     var socket = io.connect();
     var stage = new createjs.Stage("canvas");
     var bitmap = new createjs.Bitmap("/Day20/pikachu.png");
     bitmap.scaleX = 0.1;
     bitmap.scaleY = 0.1;
-    bitmap.x = canvas.width/2;
-    bitmap.y = canvas.height/2;
+    bitmap.x = 250;
+    bitmap.y = 250;
     stage.addChild(bitmap);
     stage.update();
   

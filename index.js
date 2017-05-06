@@ -13,6 +13,18 @@ io.on('connection', function(socket){
   });
 });
 
+app.get('/chat', function(req, res) {
+    res.sendFile(__dirname + '/Day19/chat.html');
+});
+
+app.get('/input', function(req, res) {
+    res.sendFile(__dirname + '/Day20/input.html');
+});
+
+app.get('/output', function(req, res) {
+    res.sendFile(__dirname + '/Day20/output.html');
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });

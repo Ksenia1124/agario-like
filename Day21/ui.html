@@ -28,8 +28,7 @@
       socket.on('user connected', function(UserId){ 
       var spriteSheet = new createjs.SpriteSheet({
       images: ["https://vk.com/images/stickers/4516/256.png"],
-      frames: {width: 256, height: 256, count: 24},
-      animations: {stand: 3}
+      frames: {width: 256, height: 256},
       });
         
       var name = 'U' + UserId.toString().substr(1, 4);
@@ -85,8 +84,7 @@
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
           images: ["https://vk.com/images/stickers/4516/256.png"],
-            frames: {width: 256, height: 256, count: 24},
-          animations: {stand: 3}
+            frames: {width: 256, height: 256},
           });
       window[Id] = new createjs.Sprite(spriteSheet, 1);
       stage.addChild(window[Id]);

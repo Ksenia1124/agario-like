@@ -2,9 +2,9 @@
 <!doctype html>
 <html>
   <head>
-    <script src="https://code.createjs.com/easeljs-0.8.0.min.js"> </script>
-    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"> </script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"> </script>
+    <script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <title>Canvas Animation</title>
     <style>
       #canvas {border: solid 1px black; background-color: lightgreen;}
@@ -18,11 +18,12 @@
       var socket = io();
           stage = new createjs.Stage("canvas");
           canvas = document.querySelector('canvas');
-          canvas.width = window.innerWidth-50;
-          canvas.height = window.innerHeight-50;
+          canvas.width = window.innerWidth-100;
+          canvas.height = window.innerHeight-100;
+      
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["http://savepic.ru/13767000.png"],
+            images: ["https://cdn.codeandweb.com/blog/2014/11/05/animate-sprites-in-css-with-texturepacker/capguy-walk.png"],
             frames: {width: 120, height: 120, count: 24},
             animations: {stand: 3}});
         var name = 'U' + UserId.toString().substr(1, 4);
@@ -76,7 +77,7 @@
     
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
-          images: ["http://savepic.ru/13767000.png"],
+          images: ["https://cdn.codeandweb.com/blog/2014/11/05/animate-sprites-in-css-with-texturepacker/capguy-walk.png"],
           frames: {width: 120, height: 120, count: 24},
           animations: {stand: 3}});
       window[Id] = new createjs.Sprite(spriteSheet, 1);

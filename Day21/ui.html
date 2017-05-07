@@ -23,9 +23,9 @@
       
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["http://pixelartmaker.com/art/389faf9fedbe49b.png"],
-            frames: {width: 440, height: 440},
-            // animations: {stand: 3}
+            images: ["http://orig02.deviantart.net/9201/f/2016/205/5/d/_papermarionew_by_honoramongscars-dab5wii.png"],
+            frames: {width: 440, height: 440, count: 24},
+            animations: {stand: 3}
             });
         var name = 'U' + UserId.toString().substr(1, 4);
         window[UserId] = new createjs.Sprite(spriteSheet, 1);
@@ -78,9 +78,9 @@
     
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
-          images: ["https://cdn.codeandweb.com/blog/2014/11/05/animate-sprites-in-css-with-texturepacker/capguy-walk.png"],
-          frames: {width: 440, height: 440,},
-          //animations: {stand: 3}
+          images: ["http://orig02.deviantart.net/9201/f/2016/205/5/d/_papermarionew_by_honoramongscars-dab5wii.png"],
+          frames: {width: 440, height: 440, count: 24},
+          animations: {stand: 3}
           });
       window[Id] = new createjs.Sprite(spriteSheet, 1);
       stage.addChild(window[Id]);

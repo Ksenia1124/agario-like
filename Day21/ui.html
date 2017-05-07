@@ -4,7 +4,7 @@
     <script src="https://code.createjs.com/easeljs-0.8.0.min.js"> </script>
     <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"> </script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"> </script>
-    <title>Canvas Animation</title>
+    <title>User Interface</title>
     <style>
       #canvas {border: solid 1px black; }
     </style>
@@ -21,10 +21,11 @@
           ctx.font = "bold 10px sans-serif";
           canvas.width = window.innerWidth-50;
           canvas.height = window.innerHeight-50;
+      
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
             images: ["/public/img/pikachu.png"],
-            frames: {width: 316, height: 226, count: 24},
+            frames: {width: 50, height: 50, count: 24},
           animations: {fly: [0, 14,"fly", 4]}});
         var name = 'U' + UserId.toString().substr(1, 4);
         window[UserId] = new createjs.Sprite(spriteSheet, 1);
@@ -79,7 +80,7 @@
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
           images: ["/public/img/pikachu.png"],
-          frames: {width: 316, height: 226, count: 24},
+          frames: {width: 50, height: 50, count: 24},
           animations: {fly: [0, 14,"fly", 4]}});
       window[Id] = new createjs.Sprite(spriteSheet, 1);
       stage.addChild(window[Id]);

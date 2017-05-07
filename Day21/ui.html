@@ -7,13 +7,16 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <title>Canvas Animation</title>
     <style>
-      #canvas {border: solid 1px black; background-image: url("https://static.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg");}
+      #canvas {
+          border: solid 1px black;
+          background-image: url("https://static.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg");
+      }
     </style>
   </head> 
   <body>
     <canvas id="canvas"></canvas><br>
-    <button onClick="onMouseClick(-20)"> Налево </button>
-    <button onClick="onMouseClick(20)"> Направо </button>
+    <button onClick="onMouseClick(-20)"> ← </button>
+    <button onClick="onMouseClick(20)"> → </button>
     <script >
       
       var socket = io();
@@ -72,8 +75,8 @@
       window.addEventListener('resize', onResize, false);
       onResize();
       function onResize() {
-        canvas.width = window.innerWidth-50;
-        canvas.height = window.innerHeight-50;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       };
       function RandomNumb(min, max){
         return Math.random() * (max - min) + min;

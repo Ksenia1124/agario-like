@@ -19,8 +19,8 @@
       var socket = io();
       stage = new createjs.Stage("canvas");
       canvas = document.querySelector('canvas');
-      canvas.width = window.innerWidth-100;
-      canvas.height = window.innerHeight-100;
+      canvas.width = window.innerWidth-50;
+      canvas.height = window.innerHeight-50;
       
       socket.on('user connected', function(UserId){ 
       var spriteSheet = new createjs.SpriteSheet({

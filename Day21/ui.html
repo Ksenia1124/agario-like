@@ -23,8 +23,8 @@
       
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["http://orig02.deviantart.net/9201/f/2016/205/5/d/_papermarionew_by_honoramongscars-dab5wii.png"],
-            frames: {width: 112, height: 150, count: 24},
+            images: ["https://vk.com/images/stickers/4516/128.png"],
+            frames: {width: 128, height: 128, count: 24},
             animations: {stand: 3}
             });
         var name = 'U' + UserId.toString().substr(1, 4);
@@ -78,8 +78,8 @@
     
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
-          images: ["http://orig02.deviantart.net/9201/f/2016/205/5/d/_papermarionew_by_honoramongscars-dab5wii.png"],
-          frames: {width: 112, height: 150, count: 24},
+          images: ["https://vk.com/images/stickers/4516/128.png"],
+          frames: {width: 128, height: 128, count: 24},
           animations: {stand: 3}
           });
       window[Id] = new createjs.Sprite(spriteSheet, 1);

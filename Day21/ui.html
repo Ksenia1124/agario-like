@@ -21,7 +21,7 @@
           canvas.height = window.innerHeight-50;
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["http://savepic.ru/13767000.png"],
+            images: ["http://thewebivore.com/demos/collie/deer-sprite.png"],
             frames: {width: 120, height: 120, count: 24},
             animations: {stand: 3}});
         var name = 'U' + UserId.toString().substr(1, 4);
@@ -75,7 +75,7 @@
     
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
-          images: ["http://savepic.ru/13767000.png"],
+          images: ["http://thewebivore.com/demos/collie/deer-sprite.png"],
           frames: {width: 120, height: 120, count: 24},
           animations: {stand: 3}});
       window[Id] = new createjs.Sprite(spriteSheet, 1);

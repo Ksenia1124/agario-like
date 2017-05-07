@@ -25,6 +25,10 @@ app.get('/output', function(req, res) {
     res.sendFile(__dirname + '/Day20/output.html');
 });
 
+app.get('/ui', function(req, res) {
+    res.sendFile(__dirname + '/Day21/ui.html');
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });

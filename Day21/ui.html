@@ -23,9 +23,10 @@
       
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["https://cdn.codeandweb.com/blog/2014/11/05/animate-sprites-in-css-with-texturepacker/capguy-walk.png"],
+            images: ["http://pixelartmaker.com/art/389faf9fedbe49b.png"],
             frames: {width: 120, height: 120, count: 24},
-            animations: {stand: 3}});
+            // animations: {stand: 3}
+            });
         var name = 'U' + UserId.toString().substr(1, 4);
         window[UserId] = new createjs.Sprite(spriteSheet, 1);
         console.log(UserId);
@@ -79,7 +80,8 @@
       var spriteSheet = new createjs.SpriteSheet({
           images: ["https://cdn.codeandweb.com/blog/2014/11/05/animate-sprites-in-css-with-texturepacker/capguy-walk.png"],
           frames: {width: 120, height: 120, count: 24},
-          animations: {stand: 3}});
+          //animations: {stand: 3}
+          });
       window[Id] = new createjs.Sprite(spriteSheet, 1);
       stage.addChild(window[Id]);
       window[Id].x = X;

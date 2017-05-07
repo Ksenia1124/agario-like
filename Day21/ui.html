@@ -6,7 +6,7 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"> </script>
     <title>Canvas Animation</title>
     <style>
-      #canvas {border: solid 1px black; background-color: rgb(204, 255, 255);}
+      #canvas {border: solid 1px black; }
     </style>
   </head> 
   <body>
@@ -17,19 +17,22 @@
       var socket = io();
           stage = new createjs.Stage("canvas");
           canvas = document.querySelector('canvas');
+          ctx = canvas.getContext('2d');
+          ctx.font = "bold 10px sans-serif";
           canvas.width = window.innerWidth-50;
           canvas.height = window.innerHeight-50;
       socket.on('user connected', function(UserId){ 
         var spriteSheet = new createjs.SpriteSheet({
-            images: ["http://thewebivore.com/demos/collie/deer-sprite.png"],
-            frames: {width: 120, height: 120, count: 24},
-            animations: {stand: 3}});
+            images: ["http://planetoftheweb.com/_/images/powship_sprites.png"],
+            frames: {width: 316, height: 226, count: 24},
+          animations: {fly: [0, 14,"fly", 4]}});
         var name = 'U' + UserId.toString().substr(1, 4);
         window[UserId] = new createjs.Sprite(spriteSheet, 1);
         console.log(UserId);
         stage.addChild(window[UserId]);
         window[UserId].x = RandomNumb(20,canvas.width-140);
         window[UserId].y = RandomNumb(20,canvas.height-140);
+        ctx.fillText(name, window[UserId].x+40, window[UserId].y-12);
         createjs.Ticker.addEventListener("tick", onTickHandler);
         socket.emit('user done',  window[UserId].x,  window[UserId].y)
       });
@@ -75,9 +78,9 @@
     
      function CreateSprite(Id,X,Y){
       var spriteSheet = new createjs.SpriteSheet({
-          images: ["http://thewebivore.com/demos/collie/deer-sprite.png"],
-          frames: {width: 120, height: 120, count: 24},
-          animations: {stand: 3}});
+          images: ["http://planetoftheweb.com/_/images/powship_sprites.png"],
+          frames: {width: 316, height: 226, count: 24},
+          animations: {fly: [0, 14,"fly", 4]}});
       window[Id] = new createjs.Sprite(spriteSheet, 1);
       stage.addChild(window[Id]);
       window[Id].x = X;

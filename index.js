@@ -33,6 +33,10 @@ http.listen(port, function(){
   console.log('listening on *:' + port);
 });
 
+app.get('/22', function(req, res) {
+    res.sendFile(__dirname + '/Day22/index.html');
+});
+
 var users = {};
 io.on('connection', function(client) {
   client.emit('users base', users);

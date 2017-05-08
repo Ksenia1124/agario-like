@@ -13,8 +13,6 @@
   </head> 
   <body>
     <canvas id="canvas"></canvas><br>
-    <button onClick="onMouseClick(-20)"> ← </button>
-    <button onClick="onMouseClick(20)"> → </button>
     <script >
       
       var socket = io();
@@ -40,17 +38,9 @@
       socket.emit('user done',  window[UserId].x,  window[UserId].y)
       });
        
-      socket.on('user done', function(coordx,coordy, userid){
+      socket.on('user done', function(coordx, coordy, userid){
          CreateSprite(userid,coordx,coordy);
       });
-      
-      socket.on('button clicked', function(UserId, value){
-          window[UserId].x += value;        
-      });
-      
-      socket.on('sprite change coord', function(UserId, value){
-          window[UserId].x += value;  
-      }); 
       
       socket.on('users base', function(users){
           for(user in users){
@@ -70,9 +60,11 @@
       function onMouseClick(val){
         socket.emit('button clicked', val);
       };
+      
       function onTickHandler(evt) {   
           stage.update();
         };
+      
       window.addEventListener('resize', onResize, false);
       onResize();
       function onResize() {

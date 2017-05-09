@@ -23,7 +23,7 @@
          
       socket.on('user connected', function(UserId){ 
       var ID = UserId;
-      var color = '#' + (Rand(0, 256).toString(16) + (Rand(0, 256).toString(16) +  (Rand(0, 256).toString(16);
+      var color = '#' + (Rand(0, 256).toString(16)) + (Rand(0, 256).toString(16)) +  (Rand(0, 256).toString(16));
       var size = Rand (5, 50);
       window[UserId] = new createjs.Shape();
       window[UserId].graphics.beginFill(color).drawCircle(0, 0, size); 

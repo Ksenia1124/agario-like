@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <script src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <title>User Interface</title>
+    <style>
+      #canvas {
+          border: solid 1px black;
+          background-image: url("https://static.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg");
+      }
+    </style>
+  </head> 
+  <body>
+    <canvas id="canvas"></canvas><br>
+    <script >
+      
+      var socket = io();
+      stage = new createjs.Stage("canvas");
+      canvas = document.querySelector('canvas');
+      canvas.width = window.innerWidth-50;
+      canvas.height = window.innerHeight-50;
+      
+      socket.on('user connected', function(UserId){ 
+      var spriteSheet = new createjs.SpriteSheet({
+      images: ["https://vk.com/images/stickers/4516/256.png"],
+      frames: {width: 256, height: 256},
+      });
+        
+      var name = 'U' + UserId.toString().substr(1, 4);
+      window[UserId] = new createjs.Sprite(spriteSheet, 1);
+      console.log(UserId);
+      stage.addChild(window[UserId]);
+        
+      window[UserId].x = RandomNumb(20,canvas.width);
+      window[UserId].y = RandomNumb(20,canvas.height);
+      createjs.Ticker.addEventListener("tick", onTickHandler);
+      socket.emit('user done',  window[UserId].x,  window[UserId].y)
+      });
+       
+      socket.on('user done', function(coordx, coordy, userid){
+         CreateSprite(userid,coordx,coordy);
+      });
+      
+      socket.on('users base', function(users){
+          for(user in users){
+              CreateSprite(user, users[user].x, users[user].y);
+          }       
+      });
+      
+      socket.on('user disconnected', function(UserId){
+        stage.removeChild(window[UserId]);
+      });
+      
+      socket.on('stagemousemove', function(evt) {
+      createjs.Tween.get(spriteSheet, {loop:false})
+      .to({ x:evt.stageX-sprite.image.width*0.2/2, y:evt.stageY-sprite.image.height*0.2/2}, 0)
+    });
+      
+      function onMouseClick(val){
+        socket.emit('button clicked', val);
+      };
+      
+      function onTickHandler(evt) {   
+          stage.update();
+        };
+      
+      window.addEventListener('resize', onResize, false);
+      onResize();
+      function onResize() {
+        canvas.width = window.innerWidth-50;
+        canvas.height = window.innerHeight-50;
+      };
+      function RandomNumb(min, max){
+        return Math.random() * (max - min) + min;
+      }
+    
+     function CreateSprite(Id,X,Y){
+      var spriteSheet = new createjs.SpriteSheet({
+          images: ["https://vk.com/images/stickers/4516/256.png"],
+            frames: {width: 256, height: 256},
+          });
+      window[Id] = new createjs.Sprite(spriteSheet, 1);
+      stage.addChild(window[Id]);
+      window[Id].x = X;
+      window[Id].y = Y;
+      createjs.Ticker.addEventListener("tick", onTickHandler);
+      };        
+    </script>
+  </body>
+</html>

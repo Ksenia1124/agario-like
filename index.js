@@ -33,6 +33,10 @@ app.get('/22', function(req, res) {
     res.sendFile(__dirname + '/Day22/index.html');
 });
 
+app.get('/23', function(req, res) {
+    res.sendFile(__dirname + '/Day23/index.html');
+});
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });

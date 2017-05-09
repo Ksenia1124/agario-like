@@ -22,8 +22,7 @@
       canvas.height = window.innerHeight-50;
       
       var color, ID, size;
-      
-      
+         
       socket.on('user connected', function(UserId){ 
       ID = UserId;
       color = '#' + Rand(0, 256).toString(16) + Rand(0, 256).toString(16) + Rand(0, 256).toString(16);
@@ -41,7 +40,8 @@
       evt.target.x = evt.stageX;
       evt.target.y = evt.stageY;
       socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
-      });      
+      }); 
+      });
       
       socket.on('user disconnected', function(UserId){
         stage.removeChild(window[UserId]);

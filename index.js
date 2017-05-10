@@ -53,12 +53,16 @@ var users = {};
 io.on('connection', function(client) {
   client.emit('users base', users);
   client.emit('user connected', client.id);
-  client.on('user done', function(coordx, coordy){
+  client.on('user done', function(coordx, coordy, ID, color, size){
     users[client.id] = {
       x: coordx,
-      y: coordy
+      y: coordy,
+      id: ID,
+      color: color,
+      size: size
     }
-    client.broadcast.emit('user done', coordx, coordy, client.id)
+    io.socket.emit('user done', coordx, coordy, ID, color, size)
+    client.broadcast.emit('users move done', coordx, coordy, ID, color, size)
   });
  
   client.on('button clicked', function(value){

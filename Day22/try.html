@@ -19,64 +19,67 @@
       var socket = io();
       stage = new createjs.Stage("canvas");
       canvas = document.querySelector('canvas');
-      canvas.width = window.innerWidth-50;
-      canvas.height = window.innerHeight-50;
-         
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
       socket.on('user connected', function(UserId){ 
-      ID = UserId;
-      color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
-      size = Rand (5, 70);
-      window[UserId] = new createjs.Shape();
-      window[UserId].graphics.beginFill(color).drawCircle(0, 0, size); 
-      window[UserId].x = Rand(0, canvas.width);
-      window[UserId].y = Rand(0, canvas.height);
-      stage.addChild(window[UserId]);  
+          ID = UserId;
+          color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
+          size = Rand (5, 70);
+          window[UserId] = new createjs.Shape();
+          window[UserId].graphics.beginFill(color).drawCircle(0, 0, size); 
+          window[UserId].x = Rand(0, canvas.width);
+          window[UserId].y = Rand(0, canvas.height);
+          stage.addChild(window[UserId]);
+      });
         
+      var name = 'U' + UserId.toString().substr(1, 4);
+      window[UserId] = new createjs.Sprite(spriteSheet, 1);
+      console.log(UserId);
+      stage.addChild(window[UserId]);
+        
+      window[UserId].x = Rand(0,canvas.width);
+      window[UserId].y = Rand(0,canvas.height);
       createjs.Ticker.addEventListener("tick", onTickHandler);
-      socket.emit('user done',  window[UserId].x,  window[UserId].y, color, size, ID);
-      
-      window[UserId].on("pressmove", function(evt) {
-      evt.target.x = evt.stageX;
-      evt.target.y = evt.stageY;
-      socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
-      }); 
+      socket.on('user done',  window[UserId].x,  window[UserId].y)
       });
       
-      socket.on('sprite change coord', function(UserId, obj){
-        window[UserId].x = obj.x;
-        window[UserId].y = obj.y;
+      socket.on('sprite change coord', function(UserId, value){
+          window[UserId].x += value;  
       }); 
       
-      socket.on('users base', function(users){
-          for(user in users){
-              CreateSprite(user, users[user].x, users[user].y, users[user].color, users[user].size);
-          }       
+      socket.on('user done',  function(x,  y, ID, color, size){
+          console.log(ID);
+          CreateSprite(ID,x,y, color, size);
+          createjs.Ticker.addEventListener("tick", onTickHandler);
       });
-      
-      socket.on('sprite change coord', function(UserId, obj){
-        window[UserId].x = obj.x;
-        window[UserId].y = obj.y;
-      }); 
       
       socket.on('user disconnected', function(UserId){
-        stage.removeChild(window[UserId]);
-      });     
-      
+          stage.removeChild(window[UserId]);
+      });
+
       function onTickHandler(evt) {   
           stage.update();
-        };
+      };
       
+      window.addEventListener('resize', onResize, false);
+      onResize();
+      function onResize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+      };
+    
       function CreateSprite(ID, X, Y, color, size){
-       window[ID] = new createjs.Shape();
-       window[ID].graphics.beginFill(color).drawCircle(0, 0, size);     
-       stage.addChild(window[ID]);
-       window[ID].x = X;
-       window[ID].y = Y;
-      createjs.Ticker.addEventListener("tick", onTickHandler);  
-      };  
+          window[ID] = new createjs.Shape();
+          window[ID].graphics.beginFill(color).drawCircle(0, 0, size);     
+          stage.addChild(window[ID]);
+          window[ID].x = X;
+          window[ID].y = Y;
+          createjs.Ticker.addEventListener("tick", onTickHandler);  
+      };
       
       function Rand(min, max){
-        return Math.random() * (max - min) + min;
+          return Math.random() * (max - min) + min;
       }
       
     </script>

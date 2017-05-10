@@ -58,7 +58,8 @@ io.on('connection', function(client) {
       x: coordx,
       y: coordy
     }
-    client.broadcast.emit('user done', coordx, coordy, client.id)
+    io.sockets.emit('user done', coordx, coordy, ID, color, size)
+    client.broadcast.emit('users move done', coordx, coordy, ID, color, size)
   });
  
   client.on('button clicked', function(value){

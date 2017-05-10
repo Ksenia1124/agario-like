@@ -15,41 +15,40 @@
   <body>
     <canvas id="canvas"></canvas><br>
     <script >
-      var color, size;   
+      var color;
+      var size;
       var socket = io();
       stage = new createjs.Stage("canvas");
       canvas = document.querySelector('canvas');
       canvas.width = window.innerWidth-50;
       canvas.height = window.innerHeight-50;
-      
       socket.on('user connected', function(UserId){ 
       ID = UserId;
       color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
       size = Rand (5, 70);
       window[UserId] = new createjs.Shape();
-      window[UserId].graphics.beginFill(color).drawCircle(0, 0, size); 
+      window[UserId].graphics.beginFill(color).drawCircle(0, 0, size);       
       window[UserId].x = Rand(0, canvas.width);
       window[UserId].y = Rand(0, canvas.height);
-      stage.addChild(window[UserId]);  
+      stage.addChild(window[UserId]);
         
       createjs.Ticker.addEventListener("tick", onTickHandler);
-      socket.emit('user done',  window[UserId].x,  window[UserId].y, color, size, ID);
-      
+      socket.emit('user done',  window[UserId].x,  window[UserId].y, ID, color, size); 
+        
       window[UserId].on("pressmove", function(evt) {
-      evt.target.x = evt.stageX;
-      evt.target.y = evt.stageY;
+          evt.target.x = evt.stageX;
+          evt.target.y = evt.stageY;   
       socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
       });
       });
       
       socket.on('users move done', function(X, Y, ID, color, size){
-        CreateSprite(ID, X ,Y, color, size);
+          CreateSprite(ID, X, Y, color, size);
       });
       
       socket.on('sprite change coord', function(UserId, obj){
-        console.log('yes');
-        window[UserId].x = obj.x;
-        window[UserId].y = obj.y;
+          window[UserId].x = obj.x;
+          window[UserId].y = obj.y;
       }); 
       
       socket.on('users base', function(users){
@@ -59,7 +58,7 @@
       });
       
       socket.on('user disconnected', function(UserId){
-        stage.removeChild(window[UserId]);
+          stage.removeChild(window[UserId]);
       });
       
       function onTickHandler(evt) {   
@@ -68,11 +67,11 @@
       window.addEventListener('resize', onResize, false);
       onResize();
       function onResize() {
-        canvas.width = window.innerWidth-50;
-        canvas.height = window.innerHeight-50;
+          canvas.width = window.innerWidth-50;
+          canvas.height = window.innerHeight-50;
       };
     
-     function CreateSprite(Id, X, Y, color, size){
+     function CreateSprite(Id,X,Y, color, size){
          console.log(Id);
          window[Id] = new createjs.Shape();
          window[Id].graphics.beginFill(color).drawCircle(0, 0, size);     
@@ -80,11 +79,12 @@
          window[Id].x = X;
          window[Id].y = Y;
          createjs.Ticker.addEventListener("tick", onTickHandler);
-      };  
+     }; 
       
-      function Rand(min, max){
+     function Rand(min, max){
         return Math.floor(Math.random() * (max - min) + min);
-      }
+     }
+      
     </script>
   </body>
 </html>

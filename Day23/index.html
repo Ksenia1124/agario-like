@@ -18,7 +18,7 @@
       var socket = io();
       stage = new createjs.Stage("canvas");
       canvas = document.querySelector('canvas');
-      canvas.width = window.innerWidth-50;
+      canvas.width = window.innerWidth;
       canvas.height = window.innerHeight-50;
          
       socket.on('user connected', function(UserId){ 
@@ -48,6 +48,13 @@
       function onTickHandler(evt) {   
           stage.update();
         };
+      
+      window.addEventListener('resize', onResize, false);
+      onResize();
+      function onResize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
       
       function Rand(min, max){
         return Math.random() * (max - min) + min;

@@ -57,18 +57,18 @@ io.on('connection', function(client) {
     users[client.id] = {
       x: coordx,
       y: coordy,
-      id: ID,
+      Id: ID,
       color: color,
       size: size
     }
-    io.socket.emit('user done', coordx, coordy, ID, color, size)
+    io.sockets.emit('user done', coordx, coordy, ID, color, size)
     client.broadcast.emit('users move done', coordx, coordy, ID, color, size)
   });
- 
-  client.on('button clicked', function(value){
-    client.broadcast.emit('sprite change coord', client.id, value);
-    client.emit('button clicked', client.id, value);
-    users[client.id].x = +users[client.id].x + value
+  client.on('move done', function(obj, ID){
+    client.broadcast.emit('sprite change coord',  ID,  obj);
+    client.emit('move done', ID, obj);
+    users[client.id].x =  obj.x;
+    users[client.id].y =  obj.y;
   });
   client.on('disconnect', function(){
     client.broadcast.emit('user disconnected', client.id);

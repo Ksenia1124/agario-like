@@ -94,10 +94,10 @@
         circle.y = Y;
         //circle.alpha = 0.75;
         createjs.Tween.get(circle)
-        .to({scaleX: 1, scaleY: 1, alpha: 0.8}, 200)
-        .to({scaleX: 0.8, scaleY: 0.8, alpha: 0.6}, 200)        
-        .to({scaleX: 0.6, scaleY: 0.6, alpha: 0.4}, 200)        
-        .to({scaleX: 0.4, scaleY: 0.4, alpha: 0.2}, 200)
+        .to({scaleX: 1, scaleY: 1, alpha: 1}, 200)
+        .to({scaleX: 0.8, scaleY: 0.8, alpha: 0.75}, 200)        
+        .to({scaleX: 0.6, scaleY: 0.6, alpha: 0.5}, 200)        
+        .to({scaleX: 0.4, scaleY: 0.4, alpha: 0.25}, 200)
         .to({scaleX: 0.2, scaleY: 0.2, alpha: 0}, 200);
         createjs.Ticker.addEventListener("tick", onTickHandler);
       }

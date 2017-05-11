@@ -64,12 +64,15 @@ io.on('connection', function(client) {
     io.sockets.emit('user done', coordx, coordy, ID, color, size)
     client.broadcast.emit('users move done', coordx, coordy, ID, color, size)
   });
+  
   client.on('move done', function(obj, ID){
+    client.broadcast.emit('sprite changes coord', obj, users[ID].color, users[ID].size);
     client.broadcast.emit('sprite change coord',  ID,  obj);
     client.emit('move done', ID, obj);
     users[client.id].x =  obj.x;
     users[client.id].y =  obj.y;
   });
+  
   client.on('disconnect', function(){
     client.broadcast.emit('user disconnected', client.id);
     delete users[client.id];

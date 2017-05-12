@@ -22,7 +22,7 @@
       var color;
       var size;
       var ID;
-      var Click = false;
+      var mouseDown = false;
       stage = document.getElementById('circles');
       socket.on('user connected', function(UserId){ 
       ID = UserId;
@@ -31,90 +31,33 @@
       circle = document.createElement('div');
       stage.appendChild(circle);
       circle.style.backgroundcolor = color;
-      circle.style.width = size;
-      circle.style.height = size;
+      circle.style.width = size + "px";
+      circle.style.height = size + "px";
+      circle.style.x = Rand(0, 1000) + "px";
+      circle.style.y = Rand(0, 500) + "px";  
       circle.className = "circle";
       circle.classList.add(UserId);
       });
-      }
-      
-      
-       /*window[UserId] = new createjs.Shape();
-            window[UserId].graphics.beginFill(color).drawCircle(0, 0, size);       
-            window[UserId].x = Rand(0,canvas.width-140);
-            window[UserId].y = Rand(0,canvas.height-140);
-            stage.addChild(window[UserId]);
-            createjs.Ticker.addEventListener("tick", onTickHandler);
-            socket.emit('user done',  window[UserId].x,  window[UserId].y, ID, color, size); 
-            window[UserId].on("pressmove", function(evt) {
-              Plume(evt.stageX, evt.stageY, color, size); 
-              evt.target.x = evt.stageX;
-              evt.target.y = evt.stageY;   
-              socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
+        
+      theCircle = document.getElementsByClassName(ID)[0];
+          theCircle.addEventListener("mousedown", function() {
+                mouseDown = true;
+	    });
+            stage.addEventListener("mousemove", function(evt){
+                mouseMoveF(evt, ID);
+	    });
+            stage.addEventListener("mouseup", function(){
+                mouseDown = false;
             });
-          });
-        */
+	    }); 
       
-      /*socket.on('users move done', function(X, Y, ID, color, size){
-        CreateSprite(ID, X, Y, color, size);
-      });
-      
-      socket.on('sprite change coord', function(UserId, obj){
-        window[UserId].x = obj.x;
-        window[UserId].y = obj.y;
-      }); 
-      
-      socket.on('sprite changes coord', function(obj, color, size){ 
-        CreateTail(obj.x, obj.y, color, size);    
-      })
-      
-      socket.on('users base', function(users){
-          for(user in users){
-              CreateSprite(user, users[user].x, users[user].y, users[user].color, users[user].size);
-          }       
-      });
-      
-      socket.on('user disconnected', function(UserId){
-        stage.removeChild(window[UserId]);
-      });
-      
-      function onTickHandler(evt) {   
-          stage.update();
-        };
-      
-      window.addEventListener('resize', onResize, false);
-      onResize();
-      function onResize() {
-        canvas.width = window.innerWidth-50;
-        canvas.height = window.innerHeight-50;
-      };
-    
-      function CreateSprite(Id, X, Y, color, size){
-       console.log(Id);
-        window[Id] = new createjs.Shape();
-        window[Id].graphics.beginFill(color).drawCircle(0, 0, size);     
-        stage.addChild(window[Id]);
-        window[Id].x = X;
-        window[Id].y = Y;
-      createjs.Ticker.addEventListener("tick", onTickHandler);
-      };     
-      
-      function Plume(X,Y, color, size){
-        circle = new createjs.Shape();
-        circle.graphics.beginFill(color).drawCircle(0, 0, size);
-        stage.addChild(circle);
-        circle.x = X;
-        circle.y = Y;
-        //circle.alpha = 0.75;
-        createjs.Tween.get(circle)
-        .to({scaleX: 1, scaleY: 1, alpha: 1}, 200)
-        .to({scaleX: 0.8, scaleY: 0.8, alpha: 0.75}, 200)        
-        .to({scaleX: 0.6, scaleY: 0.6, alpha: 0.5}, 200)        
-        .to({scaleX: 0.4, scaleY: 0.4, alpha: 0.25}, 200)
-        .to({scaleX: 0.2, scaleY: 0.2, alpha: 0}, 200);
-        createjs.Ticker.addEventListener("tick", onTickHandler);
+      function mouseMoveF(evt, ID){
+        if (mouseDown){   
+          theCirlce.style.x = evt.clientX - size/2 + "px";
+          theCircle.style.y = evt.clientY - size/2 + "px";
+	    }
       }
-      */
+      
       function Rand(min, max){
         return Math.floor(Math.random() * (max - min) + min);
       }

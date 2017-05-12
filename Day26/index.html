@@ -4,6 +4,7 @@
     <script src="https://code.createjs.com/easeljs-0.8.0.min.js"> </script>
     <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"> </script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"> </script>
+    <link href="/style.css" rel="stylesheet">
     <title>User Interface</title>
     <style>
       #canvas {
@@ -12,21 +13,29 @@
       }
     </style>
   </head> 
-  <body>
-    <canvas id="canvas"></canvas>
-    <script >
+  <body onLoad="circles();">
+    <div id="dom"></div>
+    <script>
+      function circles(){      
       var socket = io();
       var color;
       var size;
-          stage = new createjs.Stage("canvas");
-          canvas = document.querySelector('canvas');
-          canvas.width = window.innerWidth-50;
-          canvas.height = window.innerHeight-50;
-          socket.on('user connected', function(UserId){ 
-            ID = UserId;
-            var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
-            var size = Rand (5, 50);
-            window[UserId] = new createjs.Shape();
+      var ID;
+      var Click = false;
+      stage = document.getElementById('circles');
+      socket.on('user connected', function(UserId){ 
+      ID = UserId;
+      color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
+      size = Rand (5, 50);
+      circle = document.createElement('div');
+      stage.appendChild(circle);
+      circle.style.backgroundcolor = color;
+      circle.style.width = size;
+      circle.style.height = size;
+      circle.className = "circle";
+      circle.classList.add(UserId);
+        
+       /*window[UserId] = new createjs.Shape();
             window[UserId].graphics.beginFill(color).drawCircle(0, 0, size);       
             window[UserId].x = Rand(0,canvas.width-140);
             window[UserId].y = Rand(0,canvas.height-140);
@@ -40,9 +49,10 @@
               socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
             });
           });
+        */
+      }
       
-      
-      socket.on('users move done', function(X, Y, ID, color, size){
+      /*socket.on('users move done', function(X, Y, ID, color, size){
         CreateSprite(ID, X, Y, color, size);
       });
       
@@ -101,7 +111,7 @@
         .to({scaleX: 0.2, scaleY: 0.2, alpha: 0}, 200);
         createjs.Ticker.addEventListener("tick", onTickHandler);
       }
-      
+      */
       function Rand(min, max){
         return Math.floor(Math.random() * (max - min) + min);
       }

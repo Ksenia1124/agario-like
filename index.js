@@ -73,6 +73,17 @@ io.on('connection', function(client) {
     client.broadcast.emit('users move done', coordx, coordy, ID, color, size)
   });
   
+  client.on('user dome', function(color, size, x, y){
+    users[client.id] = {
+      color: color,
+      size: size,
+      x: x,
+      y: y
+    }
+   client.broadcast.emit('user dome', x, y, color, size, client.id)
+  });
+  
+  
   client.on('move done', function(obj, ID){
     client.broadcast.emit('sprite changes coord', obj, users[ID].color, users[ID].size);
     client.broadcast.emit('sprite change coord',  ID,  obj);

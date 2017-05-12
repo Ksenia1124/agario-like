@@ -49,14 +49,30 @@
             stage.addEventListener("mouseup", function(){
                 mouseDown = false;
             });
-      }
+      };
       
       function mouseMoveF(evt, ID){
         if (mouseDown){   
           theCirlce.style.left = evt.clientX - size/2 + "px";
           theCircle.style.bottom = evt.clientY - size/2 + "px";
 	    }
-      }
+      };
+	    
+	socket.on('user dome', function(X, Y, color, size, ID, users){
+        CreateSprite(X, Y, color, size, ID);
+      });
+	    
+	function CreateSprite(X, Y, color, size, Id){
+        aСircle = document.createElement('div');
+        stage.appendChild(aСircle);
+        aСircle.style.backgroundColor = color;
+        aСircle.style.width = size + 'px'; 
+        aСircle.style.height = size + 'px';
+        aСircle.style.left = X;
+        aСircle.style.bottom = Y;
+        aСircle.className = "circle";
+        aСircle.classList.add(Id);	      
+      };
       
       function Rand(min, max){
         return Math.floor(Math.random() * (max - min) + min);

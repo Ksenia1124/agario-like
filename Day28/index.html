@@ -1,14 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Day 28</title>
-  </head> 
-  <body>
-    <div id="example"> </div>
-    <script> 
-	twenty = document.getElementsByTagName('script')[0].innerHTML;
-	eight = document.getElementById('example');
-	eight.innerHTML = twenty;
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Day twenty-eight</title>  
+</head>
+<body>
+  <script type="text/javascript" id="example">
+    var day = document.getElementById("example");
+    var twenty = document.createElement("div");
+    twenty.appendChild(day);
+    eight = document.createTextNode(twenty.innerHTML);
+    document.body.appendChild(eight);
+  </script>
+</body>
 </html>

@@ -49,6 +49,10 @@ app.get('/26', function(req, res) {
     res.sendFile(__dirname + '/Day26/index.html');
 });
 
+app.get('/28', function(req, res) {
+    res.sendFile(__dirname + '/Day28/index.html');
+});
+
 app.get('/try', function(req, res) {
     res.sendFile(__dirname + '/Day22/try.html');
 });

@@ -2,15 +2,80 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Day twenty-eight</title>  
+
+  <title>Node.js Getting Started on Heroku</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+  
+  <style>
+      body {
+        background: LIGHTSALMON;
+        overflow: hidden;
+      }
+
+      canvas {
+        /*display: block;
+        position: absolute;*/
+      }
+
+      #epilepsia-circle {
+        background: linear-gradient(to bottom, ORANGERED, ORANGERED, TOMATO, CORAL, LIGHTSALMON, PALEGOLDENROD, WHITESMOKE, SKYBLUE, SKYBLUE);
+      }
+    </style>
 </head>
 <body>
-  <script type="text/javascript" id="example">
-    var day = document.getElementById("example");
-    var twenty = document.createElement("div");
-    twenty.appendChild(day);
-    eight = document.createTextNode(twenty.innerHTML);
-    document.body.appendChild(eight);
+  <canvas id="epilepsia-circle" width="1366" height="662"></canvas>
+
+
+  <script>
+  var interfaceCircle = document.getElementById("epilepsia-circle");
+    interfaceCircle.width = document.documentElement.clientWidth;
+    interfaceCircle.height = document.documentElement.clientHeight;
+    var stage = new createjs.Stage("epilepsia-circle");
+    createjs.Touch.enable(stage);
+
+function explode(conf){
+  var circle = new createjs.Shape();
+  var circleColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+  circle.graphics.beginFill(circleColor).drawCircle(0, 0, 40);
+  circle.x = conf.x;
+  circle.y = conf.y;
+  stage.addChild(circle);
+
+  createjs.Tween.get(circle, { loop: false })
+    .to({ alpha: 0, scaleX: 8, scaleY: 8}, 2000)
+
+    .call(function(){
+      stage.deleteChild(circle);
+    });
+}
+
+stage.isPressed = true;
+
+stage.on("stagemousedown",function(evt){
+  stage.isPressed = true;
+});
+stage.on("stagemouseup",function(evt){
+  stage.isPressed = false;
+});
+stage.on("stagemousemove",function(evt){
+  stage.mouseCoords = {'x':evt.stageX,'y':evt.stageY};
+});
+
+function moveHandler(evt){
+  if (stage.isPressed){
+    explode({'x':stage.mouseCoords.x,'y':stage.mouseCoords.y});
+  }
+}
+
+createjs.Ticker.setFPS(60);
+createjs.Ticker.addEventListener("tick", stage);
+createjs.Ticker.addEventListener("tick", moveHandler);
+
   </script>
 </body>
 </html>

@@ -21,7 +21,7 @@
           stage = new createjs.Stage("canvas");
           canvas = document.querySelector('canvas');
           canvas.width = window.clientWidth + "px";
-          canvas.height = window.clientWidth + "px";
+          canvas.height = window.clientHeight + "px";
           socket.on('user connected', function(UserId){ 
             ID = UserId;
             var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
@@ -73,7 +73,7 @@
       onResize();
       function onResize() {
         canvas.width = window.clientWidth + "px";
-        canvas.height = window.clientWidth + "px";
+        canvas.height = window.clientHeight + "px";
       };
     
       function CreateSprite(Id, X, Y, color, size){

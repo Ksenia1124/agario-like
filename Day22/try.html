@@ -15,50 +15,57 @@
   <body>
     <canvas id="canvas"></canvas>
     <script >
-      
-  var interfaceCircle = document.getElementById("canvas");
-    interfaceCircle.width = document.documentElement.clientWidth;
-    interfaceCircle.height = document.documentElement.clientHeight;
-    var stage = new createjs.Stage("canvas");
+    var socket = io();
+    var color;
+    var size; 
+    var stage = new createjs.Stage("canvas");  
+    var canvas = document.getElementById("canvas");
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
     createjs.Touch.enable(stage);
 
-function explode(conf){
-  var circle = new createjs.Shape();
-  var circleColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-  circle.graphics.beginFill(circleColor).drawCircle(0, 0, 40);
-  circle.x = conf.x;
-  circle.y = conf.y;
-  stage.addChild(circle);
+    socket.on('user connected', function(UserId){ 
+        ID = UserId;
+        var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
+        var size = Rand (5, 50);
+        window[UserId] = new createjs.Shape();
+        window[UserId].graphics.beginFill(color).drawCircle(0, 0, size);       
+        window[UserId].x = Rand(0,canvas.width-140);
+        window[UserId].y = Rand(0,canvas.height-140);
+        stage.addChild(window[UserId]);
+        createjs.Ticker.addEventListener("tick", onTickHandler);
+        socket.emit('user done',  window[UserId].x,  window[UserId].y, ID, color, size); 
+        window[UserId].on("pressmove", function(evt) {
+        Plume(evt.stageX, evt.stageY, color, size); 
+        evt.target.x = evt.stageX;
+        evt.target.y = evt.stageY;   
+        socket.emit('move done', {x: window[UserId].x, y: window[UserId].y}, ID);
+        });
+     });
 
-  createjs.Tween.get(circle, { loop: false })
-    .to({ alpha: 0, scaleX: 8, scaleY: 8}, 2000)
+        stage.isPressed = true;
 
-    .call(function(){
-      stage.deleteChild(circle);
-    });
-}
+        stage.on("stagemousedown",function(evt){
+          stage.isPressed = true;
+        });
+      
+        stage.on("stagemouseup",function(evt){
+          stage.isPressed = false;
+        });
+      
+        stage.on("stagemousemove",function(evt){
+          stage.mouseCoords = {'x':evt.stageX,'y':evt.stageY};
+        });
 
-stage.isPressed = true;
+        function moveHandler(evt){
+          if (stage.isPressed){
+            explode({'x':stage.mouseCoords.x,'y':stage.mouseCoords.y});
+          }
+        }
 
-stage.on("stagemousedown",function(evt){
-  stage.isPressed = true;
-});
-stage.on("stagemouseup",function(evt){
-  stage.isPressed = false;
-});
-stage.on("stagemousemove",function(evt){
-  stage.mouseCoords = {'x':evt.stageX,'y':evt.stageY};
-});
-
-function moveHandler(evt){
-  if (stage.isPressed){
-    explode({'x':stage.mouseCoords.x,'y':stage.mouseCoords.y});
-  }
-}
-
-createjs.Ticker.setFPS(60);
-createjs.Ticker.addEventListener("tick", stage);
-createjs.Ticker.addEventListener("tick", moveHandler);
+        createjs.Ticker.setFPS(60);
+        createjs.Ticker.addEventListener("tick", stage);
+        createjs.Ticker.addEventListener("tick", moveHandler);
 
   
     </script>

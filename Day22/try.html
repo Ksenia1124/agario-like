@@ -20,8 +20,8 @@
     var size; 
     var stage = new createjs.Stage("canvas");  
     var canvas = document.getElementById("canvas");
-    canvas.width = window.clientWidth;
-    canvas.height = window.clientWidth;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     createjs.Touch.enable(stage);
 
     socket.on('user connected', function(UserId){ 
@@ -73,8 +73,8 @@
       window.addEventListener('resize', onResize, false);
       onResize();
       function onResize() {
-          canvas.width = window.clientWidth;
-          canvas.height = window.clientWidth;
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
       };
     
       function CreateSprite(Id, X, Y, color, size){

@@ -19,9 +19,13 @@
       var color;
       var size;
           stage = new createjs.Stage("canvas");
-          canvas = document.querySelector('canvas');
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
+          //canvas = document.querySelector('canvas');
+          //canvas.width = window.innerWidth;
+          //canvas.height = window.innerHeight;
+          var interface = document.getElementById("сanvas"); 
+          interface.width = document.documentElement.clientWidth; 
+          interface.height = document.documentElement.clientHeight;
+      
           socket.on('user connected', function(UserId){ 
             ID = UserId;
             var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
@@ -72,8 +76,8 @@
       window.addEventListener('resize', onResize, false);
       onResize();
       function onResize() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
+          interface.width = document.documentElement.clientWidth; 
+          interface.height = document.documentElement.clientHeight;
       };
     
       function CreateSprite(Id, X, Y, color, size){

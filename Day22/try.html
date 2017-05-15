@@ -27,7 +27,7 @@
     socket.on('user connected', function(UserId){ 
         ID = UserId;
         var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
-        var size = Rand (50, 150);
+        var size = Rand (50, 100);
         window[UserId] = new createjs.Shape();
         window[UserId].graphics.beginFill(color).drawCircle(0, 0, size);       
         window[UserId].x = Rand(0,canvas.width-140);

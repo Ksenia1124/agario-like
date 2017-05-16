@@ -1,2 +1,17 @@
 * {margin:0px ; padding:0px}
 #dom {background-image: url("https://3.bp.blogspot.com/-4Pvk6z4KgDo/V2amIv0ltuI/AAAAAAAAA1E/RSmcBR0o6LE6_mvhcXwrAlLUXbpgPT2qgCLcB/s1600/agario%2Bwhite%2Bbackground.png"); width: 500px; height: 500px; border: solid 1px black;}
+
+.DialogWindow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: solid 1px black;
+    background-image: url("https://3.bp.blogspot.com/-4Pvk6z4KgDo/V2amIv0ltuI/AAAAAAAAA1E/RSmcBR0o6LE6_mvhcXwrAlLUXbpgPT2qgCLcB/s1600/agario%2Bwhite%2Bbackground.png"); 
+    padding: 10px; 
+    overflow: auto;
+}
+#rooms {};
+.button {
+    background-color: orange;
+    width: 200px;
+}

@@ -66,9 +66,22 @@ http.listen(port, function(){
 });
 
 var users = {};
+var rooms = {};
 io.on('connection', function(client) {
   client.emit('users base', users);
   client.emit('user connected', client.id);
+  client.on('room create', function(roomname){
+    room[roomname].Id = client.id;
+    client.emit('roomer connected', client.id, roomname); 
+  });
+  client.on('room join', function(roomname){
+      if (roomname in rooms){
+        socket.emit('roomer connected', client.id, roomname);
+      }
+      else {
+        socket.emit('room error', roomname)
+      }      
+  });
   client.on('user done', function(coordx, coordy, ID, color, size){
     users[client.id] = {
       x: coordx,

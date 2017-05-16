@@ -13,8 +13,18 @@
     </style>
   </head> 
   <body>
+    <div class="DialogWindow"> 
+      <div id="parent">
+      	<div class="button1">
+       	    <button id="create"> Создать доску </button>
+       	</div>
+       	<div class="button2">
+            <button id="join"> Присоединиться к доске </button>
+        </div>
+      </div>
+    </div>
     <canvas id="canvas"></canvas>
-    <script >
+    <script>
     var socket = io();
     var color;
     var size; 

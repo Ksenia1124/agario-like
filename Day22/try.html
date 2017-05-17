@@ -34,7 +34,62 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     createjs.Touch.enable(stage);
-
+      
+    create.addEventListener("mousedown", function(){
+        ChangeBoard("create")
+    });
+    create.addEventListener("mousedown", function(){
+        ChangeBoard("join")
+    });
+    
+    function ChangeBoard(value){
+        var RoomInput = document.createElement('input');
+	RoomInput.placeholder = "Room code";
+        var SubmitButton = document.createElement('button');
+	if (value == "create") {
+          create.setAttribute("disabled",true);
+          join.removeAttribute('disabled',true); 
+	  RoomInput.id = "InputCreate";
+	  SubmitButton.id = "SubmitCreate";
+          SubmitButton.innerText = "Создать";
+          SubmitButton.addEventListener("mousedown", function(evt){
+             if (RoomInput.value == "")
+	        ShowErrore("Введите название доски","");
+             else 
+             socket.emit("board create", RoomInput.value);
+	  });
+	}
+        else {
+          create.removeAttribute("disabled",true);
+          join.setAttribute("disabled",true);
+	  RoomInput.id = "InputJoin";
+	  SubmitButton.id = "SubmitJoin";
+          SubmitButton.innerText = "Присоединиться";
+          SubmitButton.addEventListener("mousedown", function(evt){
+             if (RoomInput.value == "")
+	        ShowErrore("Введите название доски","");
+             else 
+		socket.emit("board join", RoomInput.value);
+	  });
+	}
+        RoomInput.style.width = "115px";
+	SubmitButton.style.width = "119px";     
+        if (InputDiv != null){
+          parent.removeChild(InputDiv);
+          parent.removeChild(SubmitDiv);
+	}
+        InputDiv = document.createElement('div');
+        InputDiv.className = "inputdiv navigate";
+        SubmitDiv = document.createElement('div');
+	SubmitDiv.className = "submitdiv navigate";
+        
+	InputDiv.appendChild(RoomInput);
+        SubmitDiv.appendChild(SubmitButton);
+	parent.appendChild(InputDiv);
+        parent.appendChild(SubmitDiv);
+      };
+      
+      
     socket.on('user connected', function(UserId){ 
         ID = UserId;
         var color = '#' + (Math.random()*0xFFFFFF<<0).toString(16);
